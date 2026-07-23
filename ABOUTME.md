@@ -24,17 +24,18 @@ I’m motivated by learning cutting-edge tools (like LangChain RAG and OpenClaw 
 ## Technical Skills
 
 - **Frontend:** HTML (10/10), CSS/Tailwind (10/10), JavaScript (10/10), TypeScript (10/10), React (10/10), Next.js (10/10), shadcn/ui (10/10), Redux (10/10), Framer Motion (5/10).
-- **Backend:** Node.js/Express (10/10), Python (10/10), FastAPI (10/10), REST APIs (10/10), Authentication & JWT (10/10), Better Auth (10/10).
+- **Backend:** Node.js (10/10), Python (10/10), FastAPI (10/10), REST APIs (10/10), Authentication & JWT (10/10), Better Auth (10/10).
 - **Database:** PostgreSQL / Neon (10/10), SQLModel (10/10), Qdrant (Vector DB) (10/10).
-- **DevOps & Tools:** Git/GitHub (10/10), Docker (5/10), Linux/WSL (5/10), Vercel hosting (10/10), CI/CD, Cloudflare.
-- **AI & ML:** OpenAI API (10/10), Prompt Engineering (10/10), RAG/Vector Search (10/10), Multi-Agent Systems (10/10), LangChain, MCP Agents (10/10).
+- **DevOps & Tools:** Git/GitHub (10/10), Docker (5/10), Linux/WSL (5/10), Vercel hosting (10/10), CI/CD.
+- **AI & ML:** OpenAI API (10/10), Prompt Engineering (10/10), RAG/Vector Search (10/10), Multi-Agent Systems (10/10), MCP Agents (10/10).
 - **Design:** Figma (10/10), Canva (10/10), Photoshop (10/10), Illustrator (10/10); Brand Identity, Logo Design, Social Media Graphics (10/10).
 
 ## Tools & Languages
 
 - **Daily Tools:** VS Code, Docker, GitHub, ChatGPT, Claude Code, Cursor.dev, Notion.
-- **Programming:** TypeScript (10/10), Python (10/10), SQL (10/10), JavaScript (10/10); comfortable with C++ (6/10) and Java (5/10).
+- **Programming:** TypeScript (10/10), Python (10/10), SQL (10/10), JavaScript (10/10).
 - **Design:** VS Code, Figma, Illustrator, Canva, Adobe XD.
+- **Video Editing**: Capcut, Adobe Premier, Adobe After Effect.
 
 ## Projects
 

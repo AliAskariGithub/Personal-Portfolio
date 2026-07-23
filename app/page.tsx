@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   Star, Send,
   Users, Award, ArrowUpRight,
-  Coffee, Download, Folder
+  Coffee, Download
 } from 'react-feather';
 import StickyProfile from '@/components/StickyProfile';
 import SectionHeading from '@/components/SectionHeading';
@@ -14,6 +14,16 @@ import ToolCard from '@/components/ToolCard';
 import BlogCard from '@/components/BlogCard';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
+
+// New sections
+import AboutSection from '@/components/sections/AboutSection';
+import CaseStudySection from '@/components/sections/CaseStudySection';
+import AchievementsSection from '@/components/sections/AchievementsSection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import NexuGemSection from '@/components/sections/NexuGemSection';
+import FAQSection from '@/components/sections/FAQSection';
+
+
 import { projects } from '@/data/projects';
 import { experiences } from '@/data/experience';
 import { tools } from '@/data/tools';
@@ -54,25 +64,33 @@ export default function Home() {
               <span className="font-inter text-sm text-purple">Available for work</span>
             </motion.div>
 
-            {/* Main heading */}
-            <motion.h1
-              className="font-poppins font-bold text-white uppercase mb-6 leading-tight"
-              style={{
-                fontSize: 'clamp(48px, 7vw, 96px)',
-                letterSpacing: '-0.04em',
-              }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="inline-block">AGENTIC AI</span>
-              <br />
-              <motion.span
-                className="inline-block text-purple"
+            {/* Main heading with LetterReveal */}
+            <div className="mb-6">
+              <motion.h1
+                className="font-poppins font-bold text-white uppercase leading-tight"
+                style={{
+                  fontSize: 'clamp(48px, 7vw, 96px)',
+                  letterSpacing: '-0.04em',
+                }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                AGENTIC AI
+              </motion.h1>
+              <motion.h1
+                className="font-poppins font-bold text-purple uppercase leading-tight"
+                style={{
+                  fontSize: 'clamp(48px, 7vw, 96px)',
+                  letterSpacing: '-0.04em',
+                }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
                 DEVELOPER
-              </motion.span>
-            </motion.h1>
+              </motion.h1>
+            </div>
 
             {/* Description */}
             <motion.p
@@ -82,13 +100,13 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
-              I&apos;m <span className="text-white font-medium">Ali Askari</span>, an 18-year-old tech entrepreneur from Karachi building
-              <span className="text-purple"> intelligent software</span>,
-              <span className="text-purple"> AI automation</span>, and
-              <span className="text-white"> creative digital brands</span>.
+              I&apos;m <span className="text-white font-semibold">Ali Askari</span>, an 18-year-old tech entrepreneur from Karachi building
+              <span className="text-purple font-semibold"> intelligent software</span>,
+              <span className="text-purple font-semibold"> AI automation</span>, and
+              <span className="text-white font-semibold"> creative digital brands</span>.
             </motion.p>
 
-            {/* Stats with icons */}
+            {/* Stats with NumberTicker */}
             <motion.div
               className="flex gap-8 mb-12 flex-wrap"
               initial={{ opacity: 0 }}
@@ -96,10 +114,10 @@ export default function Home() {
               transition={{ delay: 0.7, duration: 0.5 }}
             >
               {[
-                { value: '18', label: 'Years Old', icon: Coffee },
-                { value: '20+', label: 'Projects Built', icon: Send },
-                { value: '5+', label: 'Happy Clients', icon: Users },
-                { value: '3rd', label: 'National Award', icon: Award },
+                { value: 18, label: 'Years Old', icon: Coffee, suffix: '' },
+                { value: 20, label: 'Projects Built', icon: Send, suffix: '+' },
+                { value: 5, label: 'Happy Clients', icon: Users, suffix: '+' },
+                { value: 3, label: 'National Award', icon: Award, suffix: 'rd' },
               ].map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -110,7 +128,9 @@ export default function Home() {
                   whileHover={{ scale: 1.05, y: -3 }}
                 >
                   <stat.icon size={16} className="text-purple" />
-                  <span className="font-poppins font-bold text-white text-xl">{stat.value}</span>
+                  <span className="font-poppins font-bold text-white text-xl">
+                    {stat.value}{stat.suffix}
+                  </span>
                   <span className="font-poppins text-xs uppercase" style={{ color: '#6a6b6e' }}>
                     {stat.label}
                   </span>
@@ -138,7 +158,7 @@ export default function Home() {
               </motion.a>
 
               <motion.a
-                href="/projects"
+                href="#contact"
                 className="group flex items-center justify-center gap-3 p-4 rounded-xl flex-1 relative overflow-hidden"
                 style={{ background: '#9D4CCC', boxShadow: 'var(--shadow-card)' }}
                 initial={{ opacity: 0, x: 50 }}
@@ -160,9 +180,9 @@ export default function Home() {
                   transition={{ duration: 3, repeat: Infinity }}
                 />
 
-                <Folder size={22} className="relative z-10" />
+                <Send size={22} className="relative z-10" />
                 <span className="font-poppins font-semibold text-white text-base relative z-10">
-                  View Projects
+                  Hire Me
                 </span>
                 <motion.div
                   className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center relative z-10"
@@ -174,8 +194,11 @@ export default function Home() {
             </div>
           </motion.section>
 
+          {/* 1. About Section - After Hero, before Featured Projects */}
+          <AboutSection />
+
           {/* Featured Projects Section */}
-          <section className="mb-28 pt-[80px]">
+          <section id="projects" className="mb-28 pt-[80px]">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -200,8 +223,11 @@ export default function Home() {
             </div>
           </section>
 
+          {/* 2. Case Study Spotlight - After Featured Projects */}
+          <CaseStudySection />
+
           {/* Experience Section */}
-          <section className="mb-28 pt-[80px]">
+          <section id="experience" className="mb-28 pt-[80px]">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -226,8 +252,11 @@ export default function Home() {
             </div>
           </section>
 
+          {/* 3. Achievements Section - After Experience */}
+          <AchievementsSection />
+
           {/* Tech Stack Section */}
-          <section className="mb-28 pt-[80px]">
+          <section id="tools" className="mb-28 pt-[80px]">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -252,8 +281,11 @@ export default function Home() {
             </div>
           </section>
 
+          {/* 4. Testimonials Section - After Core Tools */}
+          <TestimonialsSection />
+
           {/* Blog Section */}
-          <section className="mb-28 pt-[80px]">
+          <section id="blog" className="mb-28 pt-[80px]">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -278,8 +310,14 @@ export default function Home() {
             </div>
           </section>
 
+          {/* 5. NexuGem Agency Section - After Blog */}
+          <NexuGemSection />
+
+          {/* 6. FAQ Section - Before Contact */}
+          <FAQSection />
+
           {/* Contact Section */}
-          <section className="mb-16 pt-[80px]">
+          <section id="contact" className="mb-16 pt-[80px]">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}

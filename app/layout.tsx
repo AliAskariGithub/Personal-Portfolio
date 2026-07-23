@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased bg-bg min-h-screen">
+      <body className="antialiased bg-bg min-h-screen relative">
         <ScrollProgress />
         <NavBar />
         {children}

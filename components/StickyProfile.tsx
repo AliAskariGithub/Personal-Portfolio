@@ -14,7 +14,7 @@ const socialLinks = [
 export default function StickyProfile() {
   return (
     <motion.div
-      className="relative w-full bg-white rounded-2xl p-6 flex flex-col items-center overflow-hidden"
+      className="relative w-full bg-white rounded-2xl p-4 sm:p-6 flex flex-col items-center overflow-hidden mx-auto"
       style={{
         boxShadow: '0px 30px 80px -46px rgba(157,76,204,0.55)',
         maxWidth: '344px',
@@ -43,9 +43,9 @@ export default function StickyProfile() {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
 
-      {/* Profile photo - Larger */}
+      {/* Profile photo - Responsive */}
       <motion.div
-        className="relative w-[240px] h-[300px] rounded-2xl overflow-hidden mb-4"
+        className="relative w-[180px] h-[220px] sm:w-[240px] sm:h-[300px] rounded-2xl overflow-hidden mb-3 sm:mb-4"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.6 }}
@@ -65,7 +65,7 @@ export default function StickyProfile() {
       {/* Name */}
       <motion.h1
         className="font-poppins font-bold text-black text-center mb-1"
-        style={{ fontSize: '32px' }}
+        style={{ fontSize: 'clamp(24px, 5vw, 32px)' }}
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.5 }}
@@ -75,7 +75,7 @@ export default function StickyProfile() {
 
       {/* Role badges */}
       <motion.div
-        className="flex items-center gap-2 mb-3"
+        className="flex items-center gap-2 mb-2 sm:mb-3 flex-wrap justify-center"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
@@ -90,8 +90,8 @@ export default function StickyProfile() {
 
       {/* Bio */}
       <motion.p
-        className="font-poppins font-medium text-center mb-4"
-        style={{ color: '#6a6b6e', fontSize: '14px', maxWidth: '280px', lineHeight: 1.6 }}
+        className="font-poppins font-medium text-center mb-3 sm:mb-4 px-2"
+        style={{ color: '#6a6b6e', fontSize: 'clamp(12px, 2.5vw, 14px)', maxWidth: '280px', lineHeight: 1.6 }}
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
@@ -101,19 +101,19 @@ export default function StickyProfile() {
 
       {/* Location */}
       <motion.div
-        className="flex items-center gap-1.5 mb-4"
+        className="flex items-center gap-1.5 mb-3 sm:mb-4"
         style={{ color: '#6a6b6e' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.9, duration: 0.5 }}
       >
         <MapPin size={14} className="text-purple" />
-        <span className="font-poppins text-sm">Karachi, Pakistan</span>
+        <span className="font-poppins text-xs sm:text-sm">Karachi, Pakistan</span>
       </motion.div>
 
       {/* Social links */}
       <motion.div
-        className="flex gap-3"
+        className="flex gap-2 sm:gap-3"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.5 }}
@@ -124,7 +124,7 @@ export default function StickyProfile() {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all"
+            className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 transition-all"
             style={{
               borderColor: 'rgba(157,76,204,0.2)',
               color: '#6a6b6e'
@@ -141,7 +141,7 @@ export default function StickyProfile() {
             transition={{ delay: 1.3 + i * 0.1, type: "spring", stiffness: 200 }}
             aria-label={link.label}
           >
-            <link.icon size={18} />
+            <link.icon size={16} className="sm:w-[18px] sm:h-[18px]" />
           </motion.a>
         ))}
       </motion.div>

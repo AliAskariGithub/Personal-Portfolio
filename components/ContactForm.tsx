@@ -8,7 +8,7 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    budget: '',
+    reason: '',
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -32,7 +32,7 @@ export default function ContactForm() {
           access_key: process.env.NEXT_PUBLIC_WEB3FORMS_API_KEY,
           name: formData.name,
           email: formData.email,
-          budget: formData.budget,
+          reason: formData.reason,
           message: formData.message,
         }),
       });
@@ -46,7 +46,7 @@ export default function ContactForm() {
           text: 'Message has been sent successfully! You will be contacted soon.',
           icon: 'success',
         });
-        setFormData({ name: '', email: '', budget: '', message: '' });
+        setFormData({ name: '', email: '', reason: '', message: '' });
       } else {
         throw new Error(result.message || 'Something went wrong. Please try again.');
       }
@@ -122,20 +122,22 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="budget" style={labelStyle}>Budget</label>
+        <label htmlFor="reason" style={labelStyle}>Reason</label>
         <select
-          id="budget"
+          id="reason"
           required
-          value={formData.budget}
-          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+          value={formData.reason}
+          onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
           style={inputStyle}
-          className="w-full focus:outline-none focus:border focus:border-purple"
+          className="w-full h-auto focus:outline-none focus:border focus:border-purple"
         >
-          <option value="">Select budget...</option>
-          <option value="<$3k">&lt;$3k</option>
-          <option value="$3k–$5k">$3k–$5k</option>
-          <option value="$5k–$10k">$5k–$10k</option>
-          <option value=">$10k">&gt;$10k</option>
+          <option className='text-white/45 hover:text-white bg-bg transition-all duration-150' value="">Looking for...</option>
+          <option className='text-white/45 hover:text-white bg-bg transition-all duration-150' value="web-development">web development</option>
+          <option className='text-white/45 hover:text-white bg-bg transition-all duration-150' value="brand-design">brand design</option>
+          <option className='text-white/45 hover:text-white bg-bg transition-all duration-150' value="digital-marketing">digital marketing</option>
+          <option className='text-white/45 hover:text-white bg-bg transition-all duration-150' value="seo">SEO</option>
+          <option className='text-white/45 hover:text-white bg-bg transition-all duration-150' value="video-editing">video editing</option>
+          <option className='text-white/45 hover:text-white bg-bg transition-all duration-150' value="other">Other</option>
         </select>
       </div>
 

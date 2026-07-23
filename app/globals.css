@@ -9,6 +9,10 @@
   --shadow-profile: 0px 30px 80px -46px rgba(157,76,204,0.55);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: #ffffff;
   background: #151312;
