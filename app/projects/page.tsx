@@ -10,14 +10,14 @@ import Footer from '@/components/Footer';
 import NavBar from '@/components/NavBar';
 import { projects } from '@/data/projects';
 
-const categories = ['All', 'AI & Automation', 'Full-Stack', 'Education', 'Design', 'Tools'];
+const categories = ['All', 'Development', 'Design', 'AI & Automation', 'Full-Stack', 'Education'];
 
 const categoryMap: Record<string, string[]> = {
-  'AI & Automation': ['AI', 'Automation', 'Python', 'Groq AI', 'Llama-3.3', 'OpenAI', 'RAG'],
+  'Development': ['Python', 'Next.js', 'FastAPI', 'TypeScript', 'REST API', 'PostgreSQL', 'React', 'Web Dev'],
+  'Design': ['Branding', 'Identity', 'Visual Design', 'Logo Design', 'Icon Design', 'Social Media', 'Marketing', 'Graphics'],
+  'AI & Automation': ['AI', 'Automation', 'Groq AI', 'Llama-3.3', 'OpenAI', 'RAG', 'AI Agents'],
   'Full-Stack': ['Next.js', 'FastAPI', 'TypeScript', 'REST API', 'PostgreSQL', 'React'],
   'Education': ['Education', 'Docusaurus', 'Learning'],
-  'Design': ['Design', 'Web Dev', 'Branding', 'SEO'],
-  'Tools': ['Tools', 'OpenClaw', 'Agents'],
 };
 
 export default function ProjectsPage() {
@@ -33,12 +33,23 @@ export default function ProjectsPage() {
 
       if (selectedCategory === 'All') return matchesSearch;
 
+      // Check if it's a category filter
+      if (selectedCategory === 'Development') {
+        return matchesSearch && project.category === 'development';
+      }
+      if (selectedCategory === 'Design') {
+        return matchesSearch && project.category === 'design';
+      }
+
       const categoryTags = categoryMap[selectedCategory] || [];
       const matchesCategory = project.tags?.some(tag => categoryTags.includes(tag));
 
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedCategory]);
+
+  const devProjects = filteredProjects.filter(p => p.category === 'development');
+  const designProjects = filteredProjects.filter(p => p.category === 'design');
 
   return (
     <>
@@ -64,9 +75,9 @@ export default function ProjectsPage() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           >
-            <SectionHeading>FEATURED PROJECTS</SectionHeading>
-            <p className="font-poppins mb-6 sm:mb-8 max-w-lg" style={{ color: '#998f8f', fontSize: 'clamp(14px, 2.5vw, 16px)' }}>
-              A collection of projects showcasing AI automation, full-stack development, and creative design work.
+            <SectionHeading>ALL PROJECTS</SectionHeading>
+            <p className="font-poppins mb-6 sm:mb-8 max-w-2xl" style={{ color: '#998f8f', fontSize: 'clamp(14px, 2.5vw, 16px)' }}>
+              A collection of web development projects and graphic design work showcasing AI automation, full-stack development, and creative branding.
             </p>
           </motion.div>
 
@@ -130,12 +141,56 @@ export default function ProjectsPage() {
             </div>
           </motion.div>
 
-          {/* Projects Grid/List */}
+          {/* Projects Grid - Separated by Category */}
           {filteredProjects.length > 0 ? (
-            <div className="flex flex-col">
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={project.title} {...project} index={index} />
-              ))}
+            <div className="space-y-16">
+              {/* Web Development Section */}
+              {devProjects.length > 0 && (
+                <div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="mb-6"
+                  >
+                    <h2 className="font-poppins font-bold text-white text-2xl mb-2">
+                      Web Development
+                    </h2>
+                    <p className="text-gray-500 text-sm">
+                      {devProjects.length} {devProjects.length === 1 ? 'project' : 'projects'}
+                    </p>
+                  </motion.div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {devProjects.map((project, index) => (
+                      <ProjectCard key={project.title} {...project} index={index} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Graphic Design Section */}
+              {designProjects.length > 0 && (
+                <div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="mb-6"
+                  >
+                    <h2 className="font-poppins font-bold text-white text-2xl mb-2">
+                      Graphic Design
+                    </h2>
+                    <p className="text-gray-500 text-sm">
+                      {designProjects.length} {designProjects.length === 1 ? 'project' : 'projects'}
+                    </p>
+                  </motion.div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {designProjects.map((project, index) => (
+                      <ProjectCard key={project.title} {...project} index={index} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <motion.div
@@ -155,96 +210,6 @@ export default function ProjectsPage() {
               </button>
             </motion.div>
           )}
-
-          {/* Design Gallery Section */}
-          <motion.section
-            className="mt-16 sm:mt-20 pt-8 sm:pt-10 border-t border-white/10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="font-poppins font-bold text-white uppercase mb-3 sm:mb-4" style={{ fontSize: 'clamp(24px, 4vw, 36px)', letterSpacing: '-0.02em' }}>
-              Design & Video Gallery
-            </h2>
-            <p className="font-poppins mb-6 sm:mb-8 max-w-lg" style={{ color: '#998f8f', fontSize: 'clamp(12px, 2.5vw, 16px)' }}>
-              Graphic design work, brand identities, and video editing projects.
-            </p>
-
-            {/* Gallery Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {[
-                { title: 'NexuGem Brand Identity', category: 'Branding', image: 'https://framerusercontent.com/images/tRZviFpeGXyuMVmVqGj8O1XPpo.webp' },
-                { title: 'Mom\'s Kitchen Logo', category: 'Logo Design', image: 'https://framerusercontent.com/images/4mYEXU91rLBNKIW9k6hZh16l7Q.jpeg' },
-                { title: 'Tech Startup Poster', category: 'Poster Design', image: 'https://framerusercontent.com/images/a70g11CzlnQYCTEi1c802r8x1CE.jpg' },
-                { title: 'Social Media Campaign', category: 'Social Media', image: 'https://framerusercontent.com/images/SmKpJArNfpH0J4YgHNcqsyxuyEA.jpg' },
-                { title: 'Product Promo Video', category: 'Video Editing', image: 'https://framerusercontent.com/images/iwNXp5FbnVuonnC3boDtFbw8Mk.jpg' },
-                { title: 'Event Poster Series', category: 'Poster Design', image: 'https://framerusercontent.com/images/zOWx0eEsJcZm7ntGp0RzPSjE00.jpg' },
-                { title: 'E-commerce Banner', category: 'Digital Marketing', image: 'https://framerusercontent.com/images/X45kreSZsm5DFF2be6T8o6YaJAQ.jpg' },
-                { title: 'Brand Guidelines', category: 'Branding', image: 'https://framerusercontent.com/images/QYuBadXuZMyXPEyAxGrVh7iNaU.jpg' },
-              ].map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05, duration: 0.4 }}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
-                      <p className="text-white font-poppins font-medium text-xs sm:text-sm mb-1">{item.title}</p>
-                      <span className="text-purple text-[10px] sm:text-xs">{item.category}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Video Gallery */}
-            <div className="mt-10 sm:mt-12">
-              <h3 className="font-poppins font-semibold text-white text-lg sm:text-xl mb-4 sm:mb-6">Video Editing Work</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  { title: 'Product Demo Reel', duration: '2:30', thumbnail: 'https://framerusercontent.com/images/a70g11CzlnQYCTEi1c802r8x1CE.jpg' },
-                  { title: 'Brand Story Video', duration: '1:45', thumbnail: 'https://framerusercontent.com/images/SmKpJArNfpH0J4YgHNcqsyxuyEA.jpg' },
-                ].map((video, index) => (
-                  <motion.div
-                    key={video.title}
-                    className="relative aspect-video rounded-xl overflow-hidden group cursor-pointer"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
-                  >
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {/* Play Button */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-purple/80 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <div className="w-0 h-0 border-l-[10px] sm:border-l-[14px] border-l-white border-t-[6px] sm:border-t-[8px] border-t-transparent border-b-[6px] sm:border-b-[8px] border-b-transparent ml-1" />
-                      </div>
-                    </div>
-                    {/* Info */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                      <p className="text-white font-poppins font-medium text-sm sm:text-base">{video.title}</p>
-                      <p className="text-gray-400 text-xs sm:text-sm">{video.duration}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.section>
 
           <Footer />
         </div>

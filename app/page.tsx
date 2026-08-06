@@ -138,7 +138,7 @@ export default function Home() {
               ))}
             </motion.div>
 
-            {/* Action Buttons - Download Resume & View Projects */}
+            {/* Action Buttons - Download Resume & Graphic Portfolio */}
             <div className="flex gap-5 flex-col sm:flex-row">
               <motion.a
                 href="/resume.pdf"
@@ -158,7 +158,8 @@ export default function Home() {
               </motion.a>
 
               <motion.a
-                href="#contact"
+                href="/Portfolio - Graphics.pdf"
+                download="Ali_Askari_Graphic_Portfolio.pdf"
                 className="group flex items-center justify-center gap-3 p-4 rounded-xl flex-1 relative overflow-hidden"
                 style={{ background: '#9D4CCC', boxShadow: 'var(--shadow-card)' }}
                 initial={{ opacity: 0, x: 50 }}
@@ -180,16 +181,10 @@ export default function Home() {
                   transition={{ duration: 3, repeat: Infinity }}
                 />
 
-                <Send size={22} className="relative z-10" />
+                <Download size={22} className="relative z-10" />
                 <span className="font-poppins font-semibold text-white text-base relative z-10">
-                  Hire Me
+                  Graphic Portfolio
                 </span>
-                <motion.div
-                  className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center relative z-10"
-                  whileHover={{ rotate: 45, scale: 1.1 }}
-                >
-                  <ArrowUpRight size={16} className="text-white" />
-                </motion.div>
               </motion.a>
             </div>
           </motion.section>
@@ -197,7 +192,7 @@ export default function Home() {
           {/* 1. About Section - After Hero, before Featured Projects */}
           <AboutSection />
 
-          {/* Featured Projects Section */}
+          {/* Web Development Projects Section */}
           <section id="projects" className="mb-28 pt-[80px]">
             <motion.div
               initial={{ opacity: 0 }}
@@ -205,7 +200,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-100px" }}
             >
               <div className="flex items-center justify-between mb-6">
-                <SectionHeading>FEATURED PROJECTS</SectionHeading>
+                <SectionHeading>WEB DEVELOPMENT</SectionHeading>
                 <motion.a
                   href="/projects"
                   className="flex items-center gap-1 text-purple text-sm font-medium hover:underline"
@@ -214,10 +209,42 @@ export default function Home() {
                   View all <ArrowUpRight size={14} />
                 </motion.a>
               </div>
+              <p className="font-poppins mb-8 max-w-2xl" style={{ color: '#998f8f', fontSize: '16px', lineHeight: 1.7 }}>
+                Full-stack applications, AI-powered tools, and intelligent automation systems built with modern technologies.
+              </p>
             </motion.div>
 
-            <div className="flex flex-col">
-              {projects.slice(0, 4).map((project, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {projects.filter(p => p.featured && p.category === 'development').map((project, index) => (
+                <ProjectCard key={project.title} {...project} index={index} />
+              ))}
+            </div>
+          </section>
+
+          {/* Graphic Design Projects Section */}
+          <section id="graphic-portfolio" className="mb-28 pt-[80px]">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <SectionHeading>GRAPHIC DESIGN</SectionHeading>
+                <motion.a
+                  href="/projects"
+                  className="flex items-center gap-1 text-purple text-sm font-medium hover:underline"
+                  whileHover={{ x: 3 }}
+                >
+                  View all <ArrowUpRight size={14} />
+                </motion.a>
+              </div>
+              <p className="font-poppins mb-8 max-w-2xl" style={{ color: '#998f8f', fontSize: '16px', lineHeight: 1.7 }}>
+                Brand identities, logo designs, and social media graphics crafted for diverse clients and industries.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {projects.filter(p => p.featured && p.category === 'design').map((project, index) => (
                 <ProjectCard key={project.title} {...project} index={index} />
               ))}
             </div>
@@ -292,7 +319,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-100px" }}
             >
               <div className="flex items-center justify-between mb-6">
-                <SectionHeading>AI & DESIGN THOUGHTS</SectionHeading>
+                <SectionHeading>CONTENT & INSIGHTS</SectionHeading>
                 <motion.a
                   href="/blog"
                   className="flex items-center gap-1 text-purple text-sm font-medium hover:underline"

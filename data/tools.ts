@@ -116,14 +116,6 @@ export const tools: Tool[] = [
     proficiency: 10,
   },
   {
-    title: "Express.js",
-    description: "Node.js web framework",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
-    href: "https://expressjs.com/",
-    category: "backend",
-    proficiency: 10,
-  },
-  {
     title: "REST APIs",
     description: "API design & development",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openapi/openapi-original.svg",
@@ -180,14 +172,6 @@ export const tools: Tool[] = [
     href: "https://qdrant.tech/",
     category: "database",
     proficiency: 10,
-  },
-  {
-    title: "Redis",
-    description: "In-memory data store",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg",
-    href: "https://redis.io/",
-    category: "database",
-    proficiency: 8,
   },
   {
     title: "MongoDB",
@@ -248,6 +232,14 @@ export const tools: Tool[] = [
     proficiency: 10,
   },
   {
+    title: "Context Engineering",
+    description: "LLM context optimization",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chatbot/chatbot-original.svg",
+    href: "https://www.contextguide.ai/",
+    category: "ai",
+    proficiency: 10,
+  },
+  {
     title: "Claude API",
     description: "Anthropic's AI assistant",
     logo: "https://www.anthropic.com/images/icons/apple-touch-icon.png",
@@ -282,20 +274,20 @@ export const tools: Tool[] = [
     proficiency: 10,
   },
   {
+    title: "Adobe InDesign",
+    description: "Layout & typography",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/indesign/indesign-plain.svg",
+    href: "https://www.adobe.com/products/indesign.html",
+    category: "design",
+    proficiency: 10,
+  },
+  {
     title: "Canva",
     description: "Quick design & graphics",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg",
     href: "https://www.canva.com/",
     category: "design",
     proficiency: 10,
-  },
-  {
-    title: "Adobe XD",
-    description: "UI/UX design tool",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg",
-    href: "https://www.adobe.com/products/xd.html",
-    category: "design",
-    proficiency: 8,
   },
 
   // DevOps
@@ -332,28 +324,12 @@ export const tools: Tool[] = [
     proficiency: 10,
   },
   {
-    title: "Cloudflare",
-    description: "CDN & security",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg",
-    href: "https://www.cloudflare.com/",
-    category: "devops",
-    proficiency: 8,
-  },
-  {
     title: "Linux/WSL",
     description: "Unix-like environment",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
     href: "https://www.linux.org/",
     category: "devops",
     proficiency: 5,
-  },
-  {
-    title: "Kubernetes",
-    description: "Container orchestration",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
-    href: "https://kubernetes.io/",
-    category: "devops",
-    proficiency: 3,
   },
 
   // Programming Languages
@@ -374,20 +350,12 @@ export const tools: Tool[] = [
     proficiency: 10,
   },
   {
-    title: "C++",
-    description: "Systems programming",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
-    href: "https://isocpp.org/",
+    title: "JavaScript",
+    description: "Web development",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
     category: "languages",
-    proficiency: 6,
-  },
-  {
-    title: "Java",
-    description: "Enterprise applications",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-    href: "https://www.java.com/",
-    category: "languages",
-    proficiency: 5,
+    proficiency: 8,
   },
 ];
 

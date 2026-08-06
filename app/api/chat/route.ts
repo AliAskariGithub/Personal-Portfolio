@@ -121,49 +121,39 @@ Currently, he's deep into agentic AI systems — building autonomous assistants 
 - System design and architecture patterns
 `;
 
-// Array of varied responses for different contexts
-const RESPONSE_VARIATIONS = {
-  greeting: [
-    "Hey there! 👋 Great to meet you! I'm Ali's AI assistant. What brings you here today?",
-    "Hi! Welcome to Ali's portfolio. I'm here to help you learn about his work. What interests you?",
-    "Hello! 👋 Excited to chat! Ask me anything about Ali's projects, skills, or experience.",
-    "Hey! I'm Ali's AI buddy. He built me to help visitors like you. What would you like to know?",
-    "Welcome! 🎉 I can tell you all about Ali's journey in AI, web dev, or design. What catches your eye?"
-  ],
-  projects: [
-    "Ali has built some amazing projects! His AI Employee system is my personal favorite — it automates business tasks across email, WhatsApp, and LinkedIn. Want to hear more about that one?",
-    "Oh, the projects! He's got everything from an AI Todo App with natural language processing to an interactive learning platform with a RAG-based tutor. Which type interests you?",
-    "Let me tell you about his work! He's built an autonomous AI employee, a smart todo app, and even educational platforms. Pretty impressive for an 18-year-old, right?",
-    "His project portfolio is diverse — AI automation, full-stack web apps, educational tools. The Digital FTE project is particularly cool — it's like having a 24/7 AI employee!"
-  ],
-  skills: [
-    "Ali's a triple threat: code, design, and AI! He's a 10/10 in Next.js, React, TypeScript, Python, FastAPI, and even design tools like Figma. Want the full list?",
-    "His skill set is pretty unique — he bridges development and design. Full-stack dev skills? Check. AI and machine learning? Check. Graphic design? Also check (he won 3rd nationally in Pakistan!)",
-    "Frontend, backend, AI, design — he does it all. His strongest areas are Next.js, React, FastAPI, and AI tools like OpenAI and RAG systems. He's also great at prompt engineering!",
-    "He's proficient in 40+ tools across frontend, backend, database, AI, design, and DevOps. His favorites? Next.js for frontend, FastAPI for backend, and OpenAI for AI work."
-  ],
-  contact: [
-    "Want to reach out? Email him at syedaliaskrizaidi1@gmail.com, or connect on LinkedIn. He responds within 24 hours!",
-    "You can contact Ali at syedaliaskrizaidi1@gmail.com. He's also active on LinkedIn, Twitter, and GitHub. Available for freelance, contract, or full-time work!",
-    "Ready to work with Ali? Drop him an email or fill out the contact form on this site. He's available for remote or on-site projects worldwide.",
-    "His inbox is always open! Email: syedaliaskrizaidi1@gmail.com. LinkedIn and Twitter work too. He's looking for interesting projects — maybe yours?"
-  ],
-  default: [
-    "Great question! Let me help you with that. What specifically would you like to know about Ali?",
-    "I'd love to tell you more! Are you interested in his coding projects, design work, AI expertise, or something else?",
-    "Ali's got quite a story! He's an 18-year-old from Karachi who's already founded an agency, won national design awards, and built AI systems. What aspect interests you?",
-    "Happy to help! Ali's portfolio covers AI development, full-stack engineering, and design. What would you like to explore?"
-  ]
-};
+// Action keywords detection
+function detectActions(message: string): string[] {
+  const lowercaseMsg = message.toLowerCase();
+  const actions = [];
 
-function getRandomVariation(category: keyof typeof RESPONSE_VARIATIONS): string {
-  const variations = RESPONSE_VARIATIONS[category];
-  return variations[Math.floor(Math.random() * variations.length)];
+  if (lowercaseMsg.includes('contact') || lowercaseMsg.includes('hire') || lowercaseMsg.includes('reach out') || lowercaseMsg.includes('get in touch')) {
+    actions.push('SHOW_CONTACT_FORM');
+  }
+  if (lowercaseMsg.includes('project') && !lowercaseMsg.includes('what') && !lowercaseMsg.includes('tell')) {
+    actions.push('SHOW_PROJECTS');
+  }
+  if (lowercaseMsg.includes('skill') || lowercaseMsg.includes('tech') || lowercaseMsg.includes('stack')) {
+    actions.push('SHOW_SKILLS');
+  }
+  if (lowercaseMsg.includes('experience') || lowercaseMsg.includes('work')) {
+    actions.push('SHOW_EXPERIENCE');
+  }
+  if (lowercaseMsg.includes('design') || lowercaseMsg.includes('graphic')) {
+    actions.push('SHOW_DESIGN');
+  }
+  if (lowercaseMsg.includes('resume') || lowercaseMsg.includes('cv')) {
+    actions.push('DOWNLOAD_RESUME');
+  }
+
+  return actions;
 }
 
 export async function POST(request: Request) {
   try {
     const { message, history } = await request.json();
+
+    // Detect if user wants to perform actions
+    const actions = detectActions(message);
 
     const messages = [
       {
@@ -181,6 +171,9 @@ CRITICAL INSTRUCTIONS:
 8. If you don't know something specific, suggest contacting Ali directly
 9. When discussing availability, mention he's open to freelance, contract, and full-time opportunities
 10. Reference his dual expertise in both development AND design when relevant
+
+INTERACTIVE ACTIONS:
+When users ask about contact, projects, skills, or want to hire Ali, suggest that they can use quick action buttons that will appear with your message.
 
 ABOUT ALI (comprehensive information):
 ${ABOUT_ME}
@@ -201,7 +194,7 @@ IMPORTANT: Always sound natural and varied. Never repeat the same introduction o
         model: process.env.NEXT_PUBLIC_GROQAI_MODEL,
         messages,
         max_tokens: 500,
-        temperature: 0.9, // Higher temperature for more varied responses
+        temperature: 0.9,
       }),
     });
 
@@ -210,13 +203,16 @@ IMPORTANT: Always sound natural and varied. Never repeat the same introduction o
     }
 
     const data = await response.json();
-    const reply = data.choices[0]?.message?.content || getRandomVariation('default');
+    const reply = data.choices[0]?.message?.content || "I'd love to help! What would you like to know about Ali?";
 
-    return NextResponse.json({ reply });
+    return NextResponse.json({ reply, actions });
   } catch (error) {
     console.error('Chat API error:', error);
     return NextResponse.json(
-      { reply: "Oops! I'm having a small technical hiccup. Mind trying again? Or reach out to Ali directly at syedaliaskrizaidi1@gmail.com — he'd love to hear from you! 🚀" },
+      {
+        reply: "Oops! I'm having a small technical hiccup. Mind trying again? Or reach out to Ali directly at syedaliaskrizaidi1@gmail.com — he'd love to hear from you! 🚀",
+        actions: ['SHOW_CONTACT_FORM']
+      },
       { status: 200 }
     );
   }

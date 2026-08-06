@@ -1,13 +1,14 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Trash2, AlertTriangle } from 'react-feather';
+import { X, Send, Trash2, AlertTriangle, ExternalLink, Mail, FileText, Briefcase, Code, Image } from 'react-feather';
 import { useState, useRef, useEffect } from 'react';
 import { RiRobot3Fill } from 'react-icons/ri';
 
 interface Message {
   role: 'user' | 'bot';
   text: string;
+  actions?: string[];
 }
 
 const CHAT_STORAGE_KEY = 'ali-askari-chat-messages';
@@ -58,6 +59,43 @@ function TypingIndicator() {
         </motion.p>
       </div>
     </div>
+  );
+}
+
+// Action Button Component
+function ActionButton({ action, onClick }: { action: string; onClick: () => void }) {
+  const getActionConfig = () => {
+    switch (action) {
+      case 'SHOW_CONTACT_FORM':
+        return { icon: Mail, label: 'Contact Form', color: 'bg-blue-500 hover:bg-blue-600' };
+      case 'SHOW_PROJECTS':
+        return { icon: Code, label: 'View Projects', color: 'bg-purple hover:bg-purple/80' };
+      case 'SHOW_SKILLS':
+        return { icon: Briefcase, label: 'Tech Stack', color: 'bg-green-500 hover:bg-green-600' };
+      case 'SHOW_EXPERIENCE':
+        return { icon: FileText, label: 'Experience', color: 'bg-orange-500 hover:bg-orange-600' };
+      case 'SHOW_DESIGN':
+        return { icon: Image, label: 'Design Work', color: 'bg-pink-500 hover:bg-pink-600' };
+      case 'DOWNLOAD_RESUME':
+        return { icon: ExternalLink, label: 'Download Resume', color: 'bg-indigo-500 hover:bg-indigo-600' };
+      default:
+        return { icon: ExternalLink, label: 'Action', color: 'bg-gray-500 hover:bg-gray-600' };
+    }
+  };
+
+  const config = getActionConfig();
+  const Icon = config.icon;
+
+  return (
+    <motion.button
+      onClick={onClick}
+      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-white text-xs font-medium ${config.color} transition-colors`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <Icon size={14} />
+      {config.label}
+    </motion.button>
   );
 }
 
@@ -131,6 +169,45 @@ export default function FloatingCTAs() {
     };
   }, [isOpen]);
 
+// Action handlers
+  const handleAction = (action: string) => {
+    switch (action) {
+      case 'SHOW_CONTACT_FORM':
+        setIsOpen(false);
+        setTimeout(() => {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        break;
+      case 'SHOW_PROJECTS':
+        setIsOpen(false);
+        setTimeout(() => {
+          document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        break;
+      case 'SHOW_SKILLS':
+        setIsOpen(false);
+        setTimeout(() => {
+          document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        break;
+      case 'SHOW_EXPERIENCE':
+        setIsOpen(false);
+        setTimeout(() => {
+          document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        break;
+      case 'SHOW_DESIGN':
+        setIsOpen(false);
+        setTimeout(() => {
+          document.getElementById('graphic-portfolio')?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        break;
+      case 'DOWNLOAD_RESUME':
+        window.open('/resume.pdf', '_blank');
+        break;
+    }
+  };
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -159,11 +236,12 @@ export default function FloatingCTAs() {
       });
 
       const data = await response.json();
-      setMessages(prev => [...prev, { role: 'bot', text: data.reply }]);
+      setMessages(prev => [...prev, { role: 'bot', text: data.reply, actions: data.actions }]);
     } catch {
       setMessages(prev => [...prev, {
         role: 'bot',
-        text: "Sorry, I'm having trouble connecting. Reach out to Ali at syedaliaskrizaidi1@gmail.com"
+        text: "Sorry, I'm having trouble connecting. Reach out to Ali at syedaliaskrizaidi1@gmail.com",
+        actions: ['SHOW_CONTACT_FORM']
       }]);
     } finally {
       setIsLoading(false);
@@ -268,7 +346,7 @@ export default function FloatingCTAs() {
                 {messages.map((msg, i) => (
                   <motion.div
                     key={i}
-                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
@@ -281,6 +359,18 @@ export default function FloatingCTAs() {
                     >
                       {msg.text}
                     </div>
+                    {/* Action Buttons */}
+                    {msg.role === 'bot' && msg.actions && msg.actions.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {msg.actions.map((action, idx) => (
+                          <ActionButton
+                            key={idx}
+                            action={action}
+                            onClick={() => handleAction(action)}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </motion.div>
                 ))}
                 {isLoading && <TypingIndicator />}
@@ -470,7 +560,7 @@ export default function FloatingCTAs() {
               {messages.map((msg, i) => (
                 <motion.div
                   key={i}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
@@ -483,6 +573,18 @@ export default function FloatingCTAs() {
                   >
                     <p className="text-sm leading-relaxed">{msg.text}</p>
                   </div>
+                  {/* Action Buttons for Mobile */}
+                  {msg.role === 'bot' && msg.actions && msg.actions.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {msg.actions.map((action, idx) => (
+                        <ActionButton
+                          key={idx}
+                          action={action}
+                          onClick={() => handleAction(action)}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
               ))}
               {isLoading && <TypingIndicator />}
