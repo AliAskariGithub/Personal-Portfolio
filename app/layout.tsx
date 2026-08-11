@@ -7,6 +7,9 @@ import ScrollProgress from "@/components/ScrollProgress";
 export const metadata: Metadata = {
   title: "Ali Askari — Agentic AI Developer",
   description: "Karachi-based Agentic AI Developer and Full-Stack Engineer building intelligent software, AI automation, and creative digital brands.",
+  verification: {
+    google: "MdYI1tXopBF9AAyfZgWEOrTNGd8DhP5QnJMB8EVO6p8",
+  },
   twitter: {
     creator: "@Syed_Ali_Askari",
   },
@@ -18,6 +21,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/profile.jpg',
     apple: '/profile.jpg',
+    shortcut: '/profile.jpg',
   },
 };
 
